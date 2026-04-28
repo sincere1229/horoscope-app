@@ -85,6 +85,13 @@ const PLANET_INFO = {
   asc:     { label:"↑ ASC",   color:"#FFFFFF" },
 };
 
+// ── おすすめ占いデータ ────────────────────────────────
+const RECOMMEND = [
+  { icon:"🃏", name:"タロット占い",  desc:"今の状況をカードが教える", href:"https://tarot-app-rouge.vercel.app" },
+  { icon:"🔢", name:"数秘術",        desc:"運命数から使命を知る",     href:"https://numerology-app-lovat.vercel.app" },
+  { icon:"💕", name:"相性占い",      desc:"2人の運命スコアを算出",   href:"https://aicompat-app.vercel.app" },
+];
+
 // ── 言語データ ─────────────────────────────────────────
 const LANG = {
   ja: {
@@ -376,6 +383,10 @@ export default function HoroscopeApp() {
         .city-btn:hover { background:rgba(212,175,55,0.15) !important; border-color:#d4af37 !important; }
         .lang-btn { cursor:pointer; padding:5px 12px; border-radius:20px; border:1px solid rgba(212,175,55,0.35); font-size:12px; font-weight:700; transition:all 0.2s; background:transparent; font-family:'Noto Sans JP',sans-serif; color:rgba(212,175,55,0.6); }
         .lang-on { background:rgba(212,175,55,0.15) !important; color:#d4af37 !important; border-color:#d4af37 !important; }
+        .rec-card:hover { transform:translateY(-2px); border-color:rgba(212,175,55,0.5) !important; }
+        .cta-500:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(212,175,55,0.3) !important; }
+        .cta-line:hover { transform:translateY(-2px); }
+        .cta-1980:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(155,89,182,0.3) !important; }
       `}</style>
 
       {/* 星パーティクル */}
@@ -385,12 +396,14 @@ export default function HoroscopeApp() {
         ))}
       </div>
 
-      {/* ヘッダー */}
+      {/* ① ヘッダー（戻るリンク追加） */}
       <div style={s.header}>
         <div style={{position:"absolute", top:16, right:16, display:"flex", gap:6}}>
           <button className={`lang-btn ${lang==="ja"?"lang-on":""}`} onClick={()=>switchLang("ja")}>🇯🇵 JP</button>
           <button className={`lang-btn ${lang==="en"?"lang-on":""}`} onClick={()=>switchLang("en")}>🇬🇧 EN</button>
         </div>
+        {/* ① トップページに戻るリンク（ヘッダー） */}
+        <a href="https://twinkle-lab.jp/star" style={s.backLink}>← 占いポータルトップ</a>
         <div style={s.headerIcon}>🌌</div>
         <h1 style={s.title}>{L.appTitle}</h1>
         <p style={s.sub}>{L.appSub}</p>
@@ -503,7 +516,11 @@ export default function HoroscopeApp() {
 
             {activeTab==="today" && (
               <div style={{display:"flex",flexDirection:"column",gap:12}}>
-                <div style={s.card}><p style={s.sectionHead}>{L.todayHead}</p><p style={s.bodyText}>{result.today}</p></div>
+                {/* ④ 文言変更：「今日の運勢」→「この先3日で起きる出来事」 */}
+                <div style={s.card}>
+                  <p style={s.sectionHead}>☀️ この先3日で起きる出来事</p>
+                  <p style={s.bodyText}>{result.today}</p>
+                </div>
                 <div style={{...s.card,background:"rgba(212,175,55,0.08)",textAlign:"center"}}>
                   <p style={s.sectionHead}>{L.luckyHead}</p>
                   <p style={{fontSize:17,color:"#d4af37",fontWeight:700,marginTop:8}}>{result.lucky}</p>
@@ -511,6 +528,68 @@ export default function HoroscopeApp() {
                 <div style={{...s.card,background:"rgba(100,150,255,0.08)",textAlign:"center"}}>
                   <p style={s.sectionHead}>{L.messageHead}</p>
                   <p style={{fontSize:16,color:"#e0d5ff",lineHeight:2,marginTop:8,fontStyle:"italic"}}>{result.message}</p>
+                </div>
+
+                {/* ③ LINE導線（ラッキー下に追加） */}
+                <a href="https://lin.ee/XHDFrA8" target="_blank" rel="noopener noreferrer" style={s.lineBlock}>
+                  <div style={{fontSize:13,color:"rgba(212,175,55,0.8)",fontWeight:700,marginBottom:4}}>🎁 無料で続きを受け取る</div>
+                  <div style={{fontSize:12,color:"rgba(212,175,55,0.6)"}}>LINEに登録すると毎月限定の鑑定をお届けします</div>
+                  <div style={{marginTop:10,display:"inline-block",background:"rgba(212,175,55,0.15)",border:"1px solid rgba(212,175,55,0.4)",borderRadius:20,color:"#d4af37",fontSize:12,fontWeight:700,padding:"6px 18px"}}>
+                    💬 無料で続きを受け取る（LINE）
+                  </div>
+                </a>
+
+                {/* ① ② ⑤ 収益導線2択（¥500直課金 + LINE） */}
+                <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(212,175,55,0.2)",borderRadius:16,padding:"16px",marginTop:4}}>
+                  <p style={{fontSize:13,color:"rgba(212,175,55,0.8)",fontWeight:700,textAlign:"center",marginBottom:12}}>
+                    ✦ もっと詳しく知りたい方へ ✦
+                  </p>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:12}}>
+                    {/* ① ¥500直課金 */}
+                    <a href="https://buy.stripe.com/00w14g2j46C66oBcFl33W04" target="_blank" rel="noopener noreferrer" className="cta-500" style={s.cta500}>
+                      <div style={{fontSize:10,color:"#d4af37",letterSpacing:2,marginBottom:4}}>即・結果表示</div>
+                      <div style={{fontSize:13,color:"rgba(255,255,255,0.9)",fontWeight:700,marginBottom:6}}>今すぐ詳しく見る</div>
+                      <div style={{fontSize:20,color:"#d4af37",fontWeight:700,marginBottom:8}}>¥500</div>
+                      <div style={{background:"linear-gradient(135deg,#8a6a20,#d4af37)",color:"#1a0533",fontSize:11,fontWeight:700,borderRadius:8,padding:"6px 12px"}}>今すぐ鑑定する</div>
+                      <div style={{fontSize:10,color:"rgba(212,175,55,0.5)",marginTop:6}}>すぐに結果が表示されます</div>
+                    </a>
+                    {/* LINE無料 */}
+                    <a href="https://lin.ee/XHDFrA8" target="_blank" rel="noopener noreferrer" className="cta-line" style={s.ctaLine}>
+                      <div style={{fontSize:10,color:"#2a8a50",letterSpacing:2,marginBottom:4}}>完全無料</div>
+                      <div style={{fontSize:13,color:"rgba(255,255,255,0.9)",fontWeight:700,marginBottom:6}}>じっくり知りたい方へ</div>
+                      <div style={{fontSize:20,color:"#2a8a50",fontWeight:700,marginBottom:8}}>¥0</div>
+                      <div style={{background:"linear-gradient(135deg,#1a7a3c,#2a8a50)",color:"#fff",fontSize:11,fontWeight:700,borderRadius:8,padding:"6px 12px"}}>💬 無料で受け取る</div>
+                      <div style={{fontSize:10,color:"rgba(42,138,80,0.6)",marginTop:6}}>LINE登録するだけ</div>
+                    </a>
+                  </div>
+
+                  {/* ② ¥1,980直課金 */}
+                  <a href="https://buy.stripe.com/14A8wIbTEf8C9ANfRx33W03" target="_blank" rel="noopener noreferrer" className="cta-1980" style={s.cta1980}>
+                    <div style={{fontSize:10,color:"#c39bd3",letterSpacing:2,marginBottom:2}}>3テーマ詳細鑑定</div>
+                    <div style={{fontSize:13,color:"rgba(255,255,255,0.9)",fontWeight:700}}>しっかり知りたい方へ（¥1,980）</div>
+                    <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",marginTop:2}}>恋愛・仕事・金運をまとめて鑑定 · 即時表示</div>
+                  </a>
+
+                  {/* 総合鑑定へ */}
+                  <a href="https://twinkle-lab.jp/star/sogo" style={s.ctaSogo}>
+                    <span>✦ 人生全体を見る → AI総合鑑定（¥3,980）</span>
+                  </a>
+                </div>
+
+                {/* ⑥ おすすめ占い */}
+                <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(212,175,55,0.15)",borderRadius:16,padding:"16px"}}>
+                  <p style={{fontSize:13,color:"rgba(212,175,55,0.8)",fontWeight:700,textAlign:"center",marginBottom:12}}>
+                    ✦ あなたにおすすめの占い ✦
+                  </p>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
+                    {RECOMMEND.map(r=>(
+                      <a key={r.name} href={r.href} target="_blank" rel="noopener noreferrer" className="rec-card" style={s.recCard}>
+                        <div style={{fontSize:24,marginBottom:6}}>{r.icon}</div>
+                        <div style={{fontSize:11,color:"rgba(255,255,255,0.85)",fontWeight:700,marginBottom:4}}>{r.name}</div>
+                        <div style={{fontSize:10,color:"rgba(255,255,255,0.45)",lineHeight:1.4}}>{r.desc}</div>
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -536,6 +615,9 @@ export default function HoroscopeApp() {
             <button className="btn-reset" onClick={()=>{setResult(null);setShow(false);}} style={s.btnReset}>{L.reset}</button>
           </div>
         )}
+
+        {/* ② フッター前の戻るリンク */}
+        <a href="https://twinkle-lab.jp/star" style={s.backLinkBottom}>← 占いポータルトップに戻る</a>
         <p style={s.footer}>{L.footer}</p>
       </div>
     </div>
@@ -550,6 +632,10 @@ const s = {
   headerIcon:{ fontSize:48, display:"block", marginBottom:10, animation:"float 4s ease-in-out infinite" },
   title:{ fontFamily:"'Cinzel Decorative',serif", fontSize:24, fontWeight:700, color:"#d4af37", marginBottom:6, letterSpacing:"0.1em" },
   sub:{ fontSize:13, color:"rgba(212,175,55,0.6)", letterSpacing:"0.15em" },
+  // ① 戻るリンク（ヘッダー）
+  backLink:{ display:"inline-block", fontSize:12, color:"rgba(212,175,55,0.5)", textDecoration:"none", letterSpacing:"0.1em", marginBottom:12, transition:"color 0.2s" },
+  // ② 戻るリンク（フッター前）
+  backLinkBottom:{ display:"block", textAlign:"center", fontSize:12, color:"rgba(212,175,55,0.4)", textDecoration:"none", letterSpacing:"0.1em", margin:"16px 0 8px", transition:"color 0.2s" },
   body:{ position:"relative", zIndex:1, maxWidth:480, margin:"0 auto", padding:"20px 16px 48px" },
   card:{ background:"rgba(255,255,255,0.04)", borderRadius:20, padding:"24px 20px", border:"1px solid rgba(212,175,55,0.2)", marginBottom:12, backdropFilter:"blur(10px)" },
   lead:{ fontSize:16, fontWeight:700, color:"rgba(255,255,255,0.9)", textAlign:"center", marginBottom:20 },
@@ -580,5 +666,14 @@ const s = {
   btnSub:{ background:"rgba(212,175,55,0.15)", border:"1px solid rgba(212,175,55,0.4)", borderRadius:20, color:"#d4af37", fontSize:14, fontWeight:700, padding:"8px 20px", cursor:"pointer", fontFamily:"'Noto Sans JP',sans-serif", transition:"all 0.2s" },
   shareBtn:{ display:"flex", alignItems:"center", gap:6, padding:"12px 20px", borderRadius:14, border:"none", color:"#fff", fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'Noto Sans JP',sans-serif", transition:"all 0.2s" },
   btnReset:{ background:"transparent", border:"none", color:"rgba(212,175,55,0.5)", fontSize:14, fontWeight:700, cursor:"pointer", padding:"12px 0", fontFamily:"'Noto Sans JP',sans-serif", transition:"color 0.2s", textAlign:"center", width:"100%", display:"block", marginTop:8 },
-  footer:{ textAlign:"center", marginTop:40, fontSize:11, color:"rgba(212,175,55,0.3)", letterSpacing:"0.2em" },
+  footer:{ textAlign:"center", marginTop:16, fontSize:11, color:"rgba(212,175,55,0.3)", letterSpacing:"0.2em" },
+  // LINE導線ブロック
+  lineBlock:{ display:"block", background:"rgba(212,175,55,0.05)", border:"1px solid rgba(212,175,55,0.2)", borderRadius:14, padding:"16px", textAlign:"center", textDecoration:"none", transition:"all 0.2s" },
+  // 収益CTA
+  cta500:{ display:"flex", flexDirection:"column", alignItems:"center", background:"rgba(212,175,55,0.08)", border:"1px solid rgba(212,175,55,0.4)", borderRadius:14, padding:"14px 10px", textDecoration:"none", transition:"all 0.2s" },
+  ctaLine:{ display:"flex", flexDirection:"column", alignItems:"center", background:"rgba(42,138,80,0.06)", border:"1px solid rgba(42,138,80,0.3)", borderRadius:14, padding:"14px 10px", textDecoration:"none", transition:"all 0.2s" },
+  cta1980:{ display:"flex", flexDirection:"column", alignItems:"center", background:"rgba(155,89,182,0.08)", border:"1px solid rgba(155,89,182,0.35)", borderRadius:12, padding:"12px 16px", textDecoration:"none", transition:"all 0.2s", marginBottom:8 },
+  ctaSogo:{ display:"block", textAlign:"center", fontSize:12, color:"rgba(212,175,55,0.6)", textDecoration:"none", padding:"8px", letterSpacing:"0.05em" },
+  // おすすめカード
+  recCard:{ display:"flex", flexDirection:"column", alignItems:"center", background:"rgba(255,255,255,0.04)", border:"1px solid rgba(212,175,55,0.18)", borderRadius:12, padding:"12px 8px", textDecoration:"none", transition:"all 0.2s", textAlign:"center" },
 };
